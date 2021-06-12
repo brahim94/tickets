@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+    
+     <record id="view_stock_move_form_extend" model="ir.ui.view">
+        <field name="name">stockticket.form.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+          <xpath expr="//page[@name='operations']/field/tree/field[@name='company_id']" position="attributes">
+              <attribute name="string">Att</attribute>
+          </xpath>
+        </field>
+    </record>
+    <!-- Top menu item -->
+<!--
+    <menuitem name="tech_tickets" id="tech_tickets.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="tech_tickets.menu_1" parent="tech_tickets.menu_root"/>
+    <menuitem name="Menu 2" id="tech_tickets.menu_2" parent="tech_tickets.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="tech_tickets.menu_1_list" parent="tech_tickets.menu_1"
+              action="tech_tickets.action_window"/>
+    <menuitem name="Server to list" id="tech_tickets" parent="tech_tickets.menu_2"
+              action="tech_tickets.action_server"/>
+-->
+  </data>
+</odoo>
