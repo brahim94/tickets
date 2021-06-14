@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <template id="label_transfer_template_view_zpl">
+
+        <record id="action_labe_template_pdf" model="ir.actions.report">
+            <field name="name">Barcodes (PDF 2)</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tech_tickets.labe_template_view_pdf</field>
+            <field name="report_file">tech_tickets.labe_template_view_pdf</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- <template id="labe_template_view_pdf">
+         <t t-call="web.html_container">
+        <t t-call="web.internal_layout">
             <t t-set="uom_categ_unit" t-value="env.ref('uom.product_uom_categ_unit')"/>
             <t t-foreach="docs" t-as="picking">
-
                 <t t-foreach="picking.move_lines" t-as="move">
                     <t t-foreach="move.move_line_ids" t-as="move_line">
                         <t t-if="move_line.product_uom_id.category_id == uom_categ_unit">
@@ -30,16 +42,19 @@
 ^FD<t t-esc="move_line.product_id.barcode"/>^FS
 </t>
 ^XZ
+
                             </t>
                         </t>
                     </t>
                 </t>
             </t>
-        </template>
+            </t>    
+     </t>
+        </template> -->
 
-        <template id="label_transfer_template_view_pdf">
+        <template id="labe_template_view_pdf">
             <t t-call="web.basic_layout">
-                <div class="page">
+                
                     <t t-set="uom_categ_unit" t-value="env.ref('uom.product_uom_categ_unit')"/>
                     <t t-foreach="docs" t-as="picking">
                         <t t-foreach="picking.move_lines" t-as="move">
@@ -52,14 +67,36 @@
                                 </t>
                                 <t t-foreach="range(qty)" t-as="item">
                                     <t t-translation="off">
-                                        <div style="display: inline-table; height: 10rem; width: 32%;">
+                                    <div class="page">
+                                        <div style="display: inline-table; height: 60rem; width: 42%;">
                                             <table class="table table-bordered" style="border: 2px solid black;" t-if="picking.move_lines">
                                                 <tr>
-                                                    <th class="table-active text-left" style="height:4rem;">
+                                                    <th class="text-center align-middle" style="border-bottom: none;margin: 0;padding: 0;" colspan="3">
                                                         <span t-esc="move.product_id.display_name"/>
                                                     </th>
                                                 </tr>
-                                                <t t-if="move_line.product_id.tracking != 'none'">
+                                                <tr>
+                                                    <td class="text-center align-middle" style="border-right: none">
+                                                        <span t-field="picking.qr_image" t-options='{"widget": "image"}' style="width: 2%;"/>
+                                                    </td>
+                                                    <td class="text-center align-middle" style="width: 22%; border: none" >
+                                                        <span t-field="move.product_id.display_name"/>
+                                                    </td>
+                                                    <td class="text-center align-bottom" style="border-left: none">
+                                                        <span t-field="move.product_id.display_name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-active align-left" style="border-bottom: none;margin: 0;padding: 0;" colspan="3">
+                                                        INV: <span t-esc="move.product_id.display_name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center align-middle" style="border-bottom: none;margin: 0;padding: 0;" colspan="3">
+                                                        <span t-esc="move.product_id.display_name"/>
+                                                    </td>
+                                                </tr>
+                                                <!-- <t t-if="move_line.product_id.tracking != 'none'">
                                                     <tr>
                                                         <td class="text-center align-middle">
                                                             <t t-if="move_line.lot_name or move_line.lot_id">
@@ -71,28 +108,28 @@
                                                             </t>
                                                         </td>
                                                     </tr>
-                                                </t>
-                                                <t t-if="move_line.product_id.tracking == 'none'">
+                                                </t> -->
+                                                <!-- <t t-if="move_line.product_id.tracking == 'none'">
                                                     <tr>
                                                         <td class="text-center align-middle" style="height: 6rem;">
                                                             <t t-if="move_line.product_id.barcode">
                                                                     <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', move_line.product_id.barcode, 600, 150)" style="width:100%;height:4rem" alt="Barcode"/>
-                                                                    <span t-esc="move_line.product_id.barcode"/>
+                                                                    <span t-field="picking.qr_image" t-options='{"widget": "image"}' width="12%" />
                                                             </t>
                                                             <t t-else="">
                                                                 <span class="text-muted">No barcode available</span>
                                                             </t>
                                                         </td>
                                                     </tr>
-                                                </t>
+                                                </t> -->
                                             </table>
                                         </div>
+                                    </div>
                                     </t>
                                 </t>
                             </t>
                         </t>
                     </t>
-                </div>
             </t>
         </template>
 
@@ -107,7 +144,7 @@
 ^BCN,100,Y,N,N
 ^FD<t t-esc="operation.barcode"/>^FS
 </t>
-^XZ
+^XZ 
                 </t>
             </t>
         </template>
